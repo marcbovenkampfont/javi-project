@@ -27,6 +27,7 @@ interface AuthContextProps {
   login: () => Promise<string>;
   logout: () => Promise<void>;
   profile: GoogleProfile | null;
+  refreshToken: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -35,6 +36,7 @@ const AuthContext = createContext<AuthContextProps>({
   login: () => Promise.reject("Not implemented"),
   logout: () => Promise.reject("Not implemented"),
   profile: null,
+  refreshToken: () => Promise.reject("Not implemented"),
 });
 
 export const useGoogleAuth = () => useContext(AuthContext);
@@ -43,6 +45,7 @@ export const useGoogleAuth = () => useContext(AuthContext);
 
 let gsiLoaded: Promise<void> | null = null;
 let gapiLoaded: Promise<void> | null = null;
+let tokenClient: any = null;
 
 function loadGsiClient() {
   if (!gsiLoaded) {
@@ -147,6 +150,31 @@ export const GoogleAuthProvider = ({ children }: { children: React.ReactNode }) 
     }
   };
 
+  const getTokenClient = () => {
+    if (!tokenClient) {
+      tokenClient = window.google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: async (response: { access_token?: string }) => {
+          if (response.access_token) {
+            window.gapi.client.setToken({ access_token: response.access_token });
+            setToken(response.access_token);
+            setIsSignedIn(true);
+            localStorage.setItem("google_token", response.access_token);
+          }
+        },
+      });
+    }
+    return tokenClient;
+  };
+
+  const refreshToken = async (): Promise<void> => {
+    await loadGsiClient();
+    await loadGapiClient();
+    const client = getTokenClient();
+    client.requestAccessToken({ prompt: "" });
+  };
+
   const login = async (): Promise<string> => {
     await loadGsiClient(); // 👈 asegura que exista window.google
     await loadGapiClient(); // 👈 asegura que exista window.gapi
@@ -199,8 +227,17 @@ export const GoogleAuthProvider = ({ children }: { children: React.ReactNode }) 
     });
   };
 
+  useEffect(() => {
+    if (isSignedIn) {
+      const interval = setInterval(() => {
+        refreshToken();
+      }, 55 * 60 * 1000);
+      return () => clearInterval(interval);
+    }
+  }, [isSignedIn]);
+
   return (
-    <AuthContext.Provider value={{ token, isSignedIn, login, logout, profile }}>
+    <AuthContext.Provider value={{ token, isSignedIn, login, logout, profile, refreshToken}}>
       {children}
     </AuthContext.Provider>
   );

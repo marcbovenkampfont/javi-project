@@ -8,6 +8,7 @@ import { useModal } from "../utils/modalContext";
 import { ModalType } from "../shared/types/modal.types";
 import ModalDrawer from "../components/ModalDrawer/ModalDrawer";
 import ButtonCustom from "../components/ButtomCustom/ButtonCustom";
+import logo from "../assets/logo-spartan.png"
 // import Header from "../components/Header/Header";
 // import ModalDrawer from "../components/ModalDrawer/ModalDrawer";
 // import ModalMulta, { ModalMultaType } from "../components/ModalMulta/ModalMulta";
@@ -25,10 +26,10 @@ const Layout = () => {
         switch (modalType) {
             case ModalType.MENU:
                 return <div style={{ width: '100%', height: '100%', backgroundColor: 'grey'}}>
-                    <div key="headerModal" style={{ height: '50px', display: 'flex', justifyContent: 'space-between', padding: '5px', marginBottom: "30px"}}>
-                        <span>logo</span>
+                    <div key="headerModal" style={{ height: '50px', display: 'flex', justifyContent: 'space-between', alignItems: "center" , padding: '5px 15px', marginBottom: "30px"}}>
+                        <img style={{ height: "30px"}} src={logo} alt="" />
                         <ButtonCustom border={false} onClick={closeRightMenu} >
-                            X
+                            <a style={{ fontSize: "20px"}}>X</a>
                         </ButtonCustom>
                     </div>
                     <Navigator type={NavigatorType.DRAWER_TYPE} />;

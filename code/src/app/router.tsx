@@ -25,6 +25,7 @@ export const AppRoutes = () => {
                 <Route key="home" path={APP_ROUTES.home} element={<Home />} />
                 <Route key="entrenamientos" path={APP_ROUTES.entrenamientos} element={<Trainings />} />
                 <Route key="perfil" path={APP_ROUTES.perfil} element={<Perfil />} />
+                <Route key="roles" path={APP_ROUTES.roles} element={<Perfil />} />
                 {/* <Route key="alumnos" path={APP_ROUTES.resume} element={<Resume />} />
                 <Route key="add-multa" path={APP_ROUTES.addMulta} element={<AddFine />} />
                 <Route key="update-multa" path={APP_ROUTES.updateMulta} element={<UpdateFine />} /> */}

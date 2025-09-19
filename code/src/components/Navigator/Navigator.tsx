@@ -29,7 +29,7 @@ export const Navigator: React.FC<NavigatorProps> = ({type}) => {
       <NavLink onClick={onHandleClick} to={APP_ROUTES.entrenamientos} className={({isActive}) => "header__nav-link " + (isActive ? "header__nav-link--active" : "") } >Entrenamientos</NavLink>
       <NavLink onClick={onHandleClick} to={APP_ROUTES.roles} className={({isActive}) => "header__nav-link " + (isActive ? "header__nav-link--active" : "") } >Roles</NavLink>
       <NavLink onClick={onHandleClick} to={APP_ROUTES.perfil} className={({isActive}) => "header__nav-link " + (isActive ? "header__nav-link--active" : "") } >Perfil</NavLink>
-      <NavLink onClick={onHandleClick} to={"*"} className={({isActive}) => "header__nav-link " + (isActive ? "header__nav-link--active" : "") } >Resultados</NavLink>
+      {/* <NavLink onClick={onHandleClick} to={"*"} className={({isActive}) => "header__nav-link " + (isActive ? "header__nav-link--active" : "") } >Resultados</NavLink> */}
     </nav>
   )
 }

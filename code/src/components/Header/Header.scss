@@ -1,5 +1,5 @@
 .header {
-  background: #007bff;
+  background: var(--primary-color);
   color: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 
@@ -14,8 +14,19 @@
   }
 
   &__title {
-    font-size: 1.5rem;
-    font-weight: bold;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+
+    &-logo {
+      height: 30px;
+    }
+
+    &-text {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
   }
 
   &__nav {
@@ -38,13 +49,14 @@
     
     &--desktop &-link {
         &:hover {
-            background-color: #39d353;
-            color: #fff;
+            // background-color: #39d353;
+            background-color: var(--secondary-color);
+            color: black;
         }
         
         &--active {
             position: relative;
-            color: #39d353;
+            color: var(--secondary-color);
             
             &:after {
                 content: "";
@@ -53,25 +65,25 @@
                 top: calc(50% + 12px);
                 width: 80%;
                 height: 2px;
-                background: #39d353;
+                background: var(--secondary-color);
             }
         }        
     }
     &--mobile &-link {
         &--active {
             position: relative;
-            color: #39d353;
+            color: var(--secondary-color);
             
             &:before {
-                content: "";
-                position: absolute;
-                left: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 5px;
-                height: 5px;
-                border-radius: 5px;
-                background: #39d353;
+              content: "";
+              position: absolute;
+              left: 0;
+              top: 50%;
+              transform: translateY(-50%);
+              width: 5px;
+              height: 5px;
+              border-radius: 5px;
+              background: var(--secondary-color);
             }
         }   
     }
